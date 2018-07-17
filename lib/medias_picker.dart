@@ -29,6 +29,9 @@ class MediasPicker {
     if (quantity != null) {
       arguments['quantity'] = quantity;
     }
+    if (withVideo != null) {
+      arguments['withVideo'] = withVideo;
+    }
     final List<dynamic> docsPaths = await _channel.invokeMethod('pickImages', arguments);
     return docsPaths;
   }

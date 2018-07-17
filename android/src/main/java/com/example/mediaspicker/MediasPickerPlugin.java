@@ -64,8 +64,12 @@ public class MediasPickerPlugin implements MethodCallHandler, PluginRegistry.Act
 			isPhoto = true;
 
 			int quantity = 0;
+			boolean withVideo = false;
 			if (call.hasArgument("quantity")) {
 				quantity = call.argument("quantity");
+			}
+			if (call.hasArgument("withVideo")) {
+				withVideo = call.argument("withVideo");
 			}
 			maxWidth = call.argument("maxWidth");
 			maxHeight = call.argument("maxHeight");
@@ -76,7 +80,7 @@ public class MediasPickerPlugin implements MethodCallHandler, PluginRegistry.Act
 			if (quantity > 0) {
 				filePickerBuilder = filePickerBuilder.setMaxCount(quantity);
 			}
-			filePickerBuilder.enableVideoPicker(false)
+			filePickerBuilder.enableVideoPicker(withVideo)
 							 .enableImagePicker(true)
 							 .pickPhoto(activity);
 
@@ -307,18 +311,18 @@ public class MediasPickerPlugin implements MethodCallHandler, PluginRegistry.Act
 			if (intent != null) {
 				ArrayList<String> paths = intent.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA);
 
-				if (isPhoto) {
-					for (String item : paths) {
-
-						String path = CompressImage(item, maxWidth, maxHeight, quality);
-
-						if (path != null) {
-							docPaths.add(path);
-						}
-					}
-				} else {
+//				if (isPhoto) {
+//					for (String item : paths) {
+//
+//						String path = CompressImage(item, maxWidth, maxHeight, quality);
+//
+//						if (path != null) {
+//							docPaths.add(path);
+//						}
+//					}
+//				} else {
 					docPaths = paths;
-				}
+//				}
 
 			}
 
