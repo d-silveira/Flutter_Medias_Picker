@@ -39,6 +39,7 @@ public class SwiftMediasPickerPlugin: NSObject, FlutterPlugin, GalleryController
                 fatalError("args are formatted badly")
             }
             let quantity = args["quantity"]
+            let withVideo = args["withVideo"]
             maxWidth = args["maxWidth"]
             maxHeight = args["maxHeight"]
             quality = args["quality"]
@@ -46,7 +47,11 @@ public class SwiftMediasPickerPlugin: NSObject, FlutterPlugin, GalleryController
             if (quantity != nil) {
                 Config.Camera.imageLimit = quantity!
             }
-            Config.tabsToShow = [.imageTab, .cameraTab]
+            if (withVideo != nil && withVideo) {
+                Config.tabsToShow = [.imageTab, .cameraTab, .videoTab]
+            } else {
+                Config.tabsToShow = [.imageTab, .cameraTab]
+            }
 
             let gallery = GalleryController()
             gallery.delegate = self
