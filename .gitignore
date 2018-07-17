@@ -15,7 +15,6 @@ doc/api/
 .DS_Store
 pubspec.lock
 
-build/
 out/
 artifacts/
 releases/
@@ -24,7 +23,6 @@ material-design-icons/
 .atom/
 .generated/
 .flutter-plugins
-*.iml
 .idea/caches/
 .idea/workspace.xml
 .idea/tasks.xml
