@@ -11,8 +11,8 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.media.ExifInterface;
 import android.os.Environment;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -154,6 +154,7 @@ public class MediasPickerPlugin implements MethodCallHandler, PluginRegistry.Act
 	}
 
 
+	@SuppressWarnings("deprecation")
 	public String CompressImage(String filename, int maxWidth, int maxHeight, int quality) {
 
 		Bitmap scaledBitmap = null;
