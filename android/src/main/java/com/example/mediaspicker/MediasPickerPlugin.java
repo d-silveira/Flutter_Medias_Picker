@@ -11,6 +11,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.media.ExifInterface;
 import android.os.Environment;
+
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -19,6 +20,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import droidninja.filepicker.FilePickerBuilder;
@@ -318,10 +320,10 @@ public class MediasPickerPlugin implements MethodCallHandler, PluginRegistry.Act
 
 		if (requestCode == FilePickerConst.REQUEST_CODE_PHOTO) {
 
-			ArrayList<String> docPaths = new ArrayList<>();
+			List<String> docPaths = new ArrayList<>();
 
 			if (intent != null) {
-				ArrayList<String> paths = intent.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA);
+				List<String> paths = intent.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA);
 
 //				if (isPhoto) {
 //					for (String item : paths) {

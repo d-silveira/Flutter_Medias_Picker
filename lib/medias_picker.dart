@@ -8,7 +8,7 @@ class MediasPicker {
   static const MethodChannel _channel =
       const MethodChannel('medias_picker');
 
-  static Future<List<dynamic>> pickImages({int quantity, int maxWidth, int maxHeight, int quality, bool withVideo}) async {
+  static Future<List<String>> pickImages({int quantity, int maxWidth, int maxHeight, int quality, bool withVideo}) async {
 
     if (maxWidth != null && maxWidth < 0) {
       throw new ArgumentError.value(maxWidth, 'maxWidth cannot be negative');
@@ -38,11 +38,11 @@ class MediasPicker {
     if (withVideo != null) {
       arguments['withVideo'] = withVideo;
     }
-    final List<dynamic> docsPaths = await _channel.invokeMethod('pickImages', arguments);
+    final List<String> docsPaths = await _channel.invokeListMethod<String>('pickImages', arguments);
     return docsPaths;
   }
 
-  static Future<List<dynamic>> pickVideos({int quantity}) async {
+  static Future<List<String>> pickVideos({int quantity}) async {
 
     if (Platform.isAndroid)
       if (!await checkPermission())
@@ -54,11 +54,11 @@ class MediasPicker {
       arguments['quantity'] = quantity;
     }
 
-    final List<dynamic> docsPaths = await _channel.invokeMethod('pickVideos', arguments);
+    final List<String> docsPaths = await _channel.invokeListMethod<String>('pickVideos', arguments);
     return docsPaths;
   }
 
-  static Future<List<dynamic>> compressImages({@required List<String> imgPaths, int maxWidth, int maxHeight, int quality}) async {
+  static Future<List<String>> compressImages({@required List<String> imgPaths, int maxWidth, int maxHeight, int quality}) async {
 
     if (imgPaths != null && imgPaths.length <= 0) {
       throw new ArgumentError.value(imgPaths, 'imgPaths needs to have 1 or more itens');
@@ -81,7 +81,7 @@ class MediasPicker {
         if (!await requestPermission())
           return [];
 
-    final List<dynamic> docsPaths = await _channel.invokeMethod('compressImages', <String, dynamic>{
+    final List<String> docsPaths = await _channel.invokeListMethod<String>('compressImages', <String, dynamic>{
       'imgPaths': imgPaths,
       'maxWidth': maxWidth ?? 0,
       'maxHeight': maxHeight ?? 0,
