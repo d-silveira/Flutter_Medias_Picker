@@ -16,7 +16,7 @@
     </style>
 
     <style name="PickerTabLayout" parent="Widget.Design.TabLayout">
-        <item name="tabBackground">@color/white</item>
+        <item name="tabBackground">@android:color/white</item>
         <item name="tabGravity">fill</item>
         <item name="tabMaxWidth">0dp</item>
     </style>

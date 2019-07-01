@@ -16,7 +16,7 @@
          FlutterApplication and put your custom class here. -->
     <application tools:replace="android:name"
         android:name="io.flutter.app.FlutterApplication"
-        android:label="medias_picker_example"
+        android:label="media_picker_example"
         android:icon="@mipmap/ic_launcher">
         <activity
             android:name=".MainActivity"

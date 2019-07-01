@@ -2,7 +2,7 @@
 # To learn more about a Podspec see http://guides.cocoapods.org/syntax/podspec.html
 #
 Pod::Spec.new do |s|
-  s.name             = 'medias_picker'
+  s.name             = 'media_picker'
   s.version          = '0.0.1'
   s.swift_version    = '4.2'
   s.summary          = 'A new Flutter plugin to get pictures and videos.'
@@ -18,7 +18,7 @@ A new Flutter plugin to get pictures and videos.
   s.dependency 'Flutter'
   s.dependency 'Gallery'
   s.dependency 'SVProgressHUD'
-  
+
   s.ios.deployment_target = '9.0'
 end
 

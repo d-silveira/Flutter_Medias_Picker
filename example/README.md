@@ -1,6 +1,6 @@
-# medias_picker_example
+# media_picker_example
 
-Demonstrates how to use the medias_picker plugin.
+Demonstrates how to use the media_picker plugin.
 
 ## Getting Started
 

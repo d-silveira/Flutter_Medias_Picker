@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:medias_picker/media_picker.dart';
+import 'package:media_picker/media_picker.dart';
 
 void main() => runApp(new MyApp());
 
@@ -22,7 +22,7 @@ class _MyAppState extends State<MyApp> {
   pickImages() async {
     try {
 
-      mediaPaths = await MediasPicker.pickImages(withVideo: true);
+      mediaPaths = await MediaPicker.pickImages(withVideo: true);
 
 //      filter only images from mediaPaths and send them to the compressor
 //      List<dynamic> listCompressed = await MediasPicker.compressImages(imgPaths: [firstPath], maxWidth: 600, maxHeight: 600, quality: 100);
@@ -42,7 +42,7 @@ class _MyAppState extends State<MyApp> {
 
   pickVideos() async {
     try {
-      mediaPaths = await MediasPicker.pickVideos(quantity: 7);
+      mediaPaths = await MediaPicker.pickVideos(quantity: 7);
     } on PlatformException {
 
     }
@@ -89,7 +89,7 @@ class _MyAppState extends State<MyApp> {
                 ),
                 onPressed: () async {
 
-                  if (await MediasPicker.deleteAllTempFiles()) {
+                  if (await MediaPicker.deleteAllTempFiles()) {
                     setState(() {
                       _platformVersion = "deleted";
                     });

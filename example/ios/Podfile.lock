@@ -1,7 +1,7 @@
 PODS:
   - Flutter (1.0.0)
   - Gallery (2.0.6)
-  - medias_picker (0.0.1):
+  - media_picker (0.0.1):
     - Flutter
     - Gallery
     - SVProgressHUD
@@ -9,7 +9,7 @@ PODS:
 
 DEPENDENCIES:
   - Flutter (from `.symlinks/flutter/ios`)
-  - medias_picker (from `.symlinks/plugins/medias_picker/ios`)
+  - media_picker (from `.symlinks/plugins/media_picker/ios`)
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -19,13 +19,13 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Flutter:
     :path: ".symlinks/flutter/ios"
-  medias_picker:
-    :path: ".symlinks/plugins/medias_picker/ios"
+  media_picker:
+    :path: ".symlinks/plugins/media_picker/ios"
 
 SPEC CHECKSUMS:
   Flutter: 9d0fac939486c9aba2809b7982dfdbb47a7b0296
   Gallery: 5489ae11d8010a3cc163030f6e92d618afbdf4df
-  medias_picker: 70980453c067892528c1f05b140cb430efc1ed69
+  media_picker: 70980453c067892528c1f05b140cb430efc1ed69
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
 
 PODFILE CHECKSUM: db349d1644357b39bc3f16eb149350b05a420945

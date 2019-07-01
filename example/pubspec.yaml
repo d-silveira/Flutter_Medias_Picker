@@ -1,5 +1,5 @@
-name: medias_picker_example
-description: Demonstrates how to use the medias_picker plugin.
+name: media_picker_example
+description: Demonstrates how to use the media_picker plugin.
 
 dependencies:
   flutter:
@@ -12,7 +12,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  medias_picker:
+  media_picker:
     path: ../
 
 

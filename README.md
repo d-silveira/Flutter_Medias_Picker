@@ -1,4 +1,4 @@
-# medias_picker
+# media_picker
 
 Flutter plugin to get pictures and videos.
 

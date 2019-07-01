@@ -1,3 +1,6 @@
-## [0.0.1] - TODO: Add release date.
+## [1.1.2] - 2019.07.01
 
-* TODO: Describe initial release.
+* gallery with Camera support
+* gallery with video support
+* androidX update
+* Officializing fork from upstream Flutter Medias Picker

@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:meta/meta.dart';
 
-class MediasPicker {
+class MediaPicker {
   static const MethodChannel _channel =
       const MethodChannel('media_picker');
 
