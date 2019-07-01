@@ -6,7 +6,7 @@ import 'package:meta/meta.dart';
 
 class MediasPicker {
   static const MethodChannel _channel =
-      const MethodChannel('medias_picker');
+      const MethodChannel('media_picker');
 
   static Future<List<String>> pickImages({int quantity, int maxWidth, int maxHeight, int quality, bool withVideo}) async {
 

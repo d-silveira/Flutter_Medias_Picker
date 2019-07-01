@@ -51,7 +51,7 @@ public class MediasPickerPlugin implements MethodCallHandler, PluginRegistry.Act
 	}
 
 	public static void registerWith(Registrar registrar) {
-		final MethodChannel channel = new MethodChannel(registrar.messenger(), "medias_picker");
+		final MethodChannel channel = new MethodChannel(registrar.messenger(), "media_picker");
 		MediasPickerPlugin plugin = new MediasPickerPlugin(registrar.activity());
 		channel.setMethodCallHandler(plugin);
 

@@ -1,6 +1,6 @@
 # medias_picker
 
-A new Flutter plugin to get pictures and videos.
+Flutter plugin to get pictures and videos.
 
 ## Getting Started
 
@@ -8,6 +8,8 @@ For help getting started with Flutter, view our online
 [documentation](https://flutter.io/).
 
 **This Plugin is under development, but alredy works in IOS and Android**
+
+Forked from [Flutter Medias Picker](https://github.com/lubritto/Flutter_Medias_Picker)
 
 For help on editing plugin code, view the [documentation](https://flutter.io/platform-plugins/#edit-code).
 
@@ -39,7 +41,7 @@ You need to put these styles to plugin works
 
 add <uses-permission android:name="android.permission.CAMERA"/> in manifest
 
-and in your podfile 
+and in your podfile
 
 ```sh
 platform :ios, '9.0'

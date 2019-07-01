@@ -1,8 +1,8 @@
 name: medias_picker
-description: A new Flutter plugin to get pictures and videos.
-version: 0.1.2
-author: Lucas Britto <l_demello@hotmail.com>
-homepage: https://github.com/lubritto/Flutter_Medias_Picker
+description: Flutter plugin to get pictures and videos from the device.
+version: 1.2.1
+author: Duarte Silveira <dsilveira@gmx.net>
+homepage: https://github.com/dsilveira/flutter_media_picker
 
 dependencies:
   flutter:

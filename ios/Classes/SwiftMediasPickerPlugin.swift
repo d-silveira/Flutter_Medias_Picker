@@ -12,7 +12,7 @@ public class SwiftMediasPickerPlugin: NSObject, FlutterPlugin, GalleryController
     private var quality: Int?
 
     public static func register(with registrar: FlutterPluginRegistrar) {
-        let channel = FlutterMethodChannel(name: "medias_picker", binaryMessenger: registrar.messenger())
+        let channel = FlutterMethodChannel(name: "media_picker", binaryMessenger: registrar.messenger())
         let viewController: UIViewController? = UIApplication.shared.delegate?.window??.rootViewController
         let instance = SwiftMediasPickerPlugin(viewController: viewController)
         registrar.addMethodCallDelegate(instance as FlutterPlugin, channel: channel)

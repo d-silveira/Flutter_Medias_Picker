@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:medias_picker/medias_picker.dart';
+import 'package:medias_picker/media_picker.dart';
 
 void main() => runApp(new MyApp());
 
@@ -13,21 +13,20 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
-  List<dynamic> docPaths;
+  List<dynamic> mediaPaths;
   @override
   initState() {
     super.initState();
   }
-  
+
   pickImages() async {
     try {
 
-      docPaths = await MediasPicker.pickImages(quantity: 7, maxWidth: 1024, maxHeight: 1024, quality: 85);
-      
-      String firstPath = docPaths[0] as String;
+      mediaPaths = await MediasPicker.pickImages(withVideo: true);
 
-      List<dynamic> listCompressed = await MediasPicker.compressImages(imgPaths: [firstPath], maxWidth: 600, maxHeight: 600, quality: 100);
-      print(listCompressed);
+//      filter only images from mediaPaths and send them to the compressor
+//      List<dynamic> listCompressed = await MediasPicker.compressImages(imgPaths: [firstPath], maxWidth: 600, maxHeight: 600, quality: 100);
+//      print(listCompressed);
 
     } on PlatformException {
 
@@ -37,13 +36,13 @@ class _MyAppState extends State<MyApp> {
       return;
 
     setState(() {
-      _platformVersion = docPaths.toString();
+      _platformVersion = mediaPaths.toString();
     });
   }
 
   pickVideos() async {
     try {
-      docPaths = await MediasPicker.pickVideos(quantity: 7);
+      mediaPaths = await MediasPicker.pickVideos(quantity: 7);
     } on PlatformException {
 
     }
@@ -52,10 +51,10 @@ class _MyAppState extends State<MyApp> {
       return;
 
     setState(() {
-      _platformVersion = docPaths.toString();
+      _platformVersion = mediaPaths.toString();
     });
   }
-  
+
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +69,7 @@ class _MyAppState extends State<MyApp> {
               new Text('Running on: $_platformVersion\n'),
               new MaterialButton(
                 child: new Text(
-                  "Pick image",
+                  "Pick images and videos",
                 ),
                 onPressed: () {
                   pickImages();
@@ -78,7 +77,7 @@ class _MyAppState extends State<MyApp> {
               ),
               new MaterialButton(
                 child: new Text(
-                  "Pick videos",
+                  "Pick just videos",
                 ),
                 onPressed: () {
                   pickVideos();
@@ -89,14 +88,14 @@ class _MyAppState extends State<MyApp> {
                   "Delete temp folder (automatic on ios)",
                 ),
                 onPressed: () async {
-                  
+
                   if (await MediasPicker.deleteAllTempFiles()) {
                     setState(() {
-                      _platformVersion = "deleted";             
+                      _platformVersion = "deleted";
                     });
                   } else {
                     setState(() {
-                      _platformVersion = "not deleted";             
+                      _platformVersion = "not deleted";
                     });
                   }
                 },
