@@ -1,3 +1,7 @@
+## [1.2.3] - 2019.10.01
+
+* updates example README
+
 ## [1.2.2] - 2019.10.01
 
 * updates with upstream medias_picker
