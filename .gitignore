@@ -1,33 +1,33 @@
-# See https://www.dartlang.org/guides/libraries/private-files
-
-# Files and directories created by pub
+.DS_Store
 .dart_tool/
+
 .packages
 .pub/
+pubspec.lock
+
+.gradle
 build/
-# If you're building an application, you may want to check-in your pubspec.lock
-pubspec.lock
-
-# Directory created by dartdoc
-# If you don't generate documentation locally you can remove this line.
-doc/api/
-
-.DS_Store
-pubspec.lock
-
 out/
 artifacts/
 releases/
 packages
+.pub/
+.dart-tool/
 material-design-icons/
 .atom/
 .generated/
 .flutter-plugins
-.idea/caches/
-.idea/workspace.xml
-.idea/tasks.xml
-.idea/gradle.xml
-.idea/dictionaries
-.idea/libraries
-.idea/misc.xml
+*.iml
+.idea
+local.properties
 
+.idea/*.time
+.idea/sonarlint/
+.idea/assetWizardSettings.xml
+android/.idea/*.time
+android/.idea/sonarlint/
+android/.idea/assetWizardSettings.xml
+android.zip
+
+Podfile.lock
+node_modules

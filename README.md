@@ -1,13 +1,15 @@
 # media_picker
 
 Flutter plugin to get pictures and videos.
+It allows you to select one or more images from gallery or camera, without needing to switch provider.
+It also allows you to select both images and videos if you wish
 
 ## Getting Started
 
 For help getting started with Flutter, view our online
 [documentation](https://flutter.io/).
 
-**This Plugin is under development, but alredy works in IOS and Android**
+**This Plugin is under development. It works in IOS and Android**
 
 Forked from [Flutter Medias Picker](https://github.com/lubritto/Flutter_Medias_Picker)
 
