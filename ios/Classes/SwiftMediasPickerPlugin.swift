@@ -110,8 +110,10 @@ public class SwiftMediasPickerPlugin: NSObject, FlutterPlugin, GalleryController
         DispatchQueue.global(qos: .userInitiated).async {
             let resultUrls : NSMutableArray = NSMutableArray()
             let fileManager:FileManager = FileManager()
-
-            SVProgressHUD.show()
+            
+            self.runOnUIThread {
+              SVProgressHUD.show()
+            }
 
             for image in images {
 
@@ -128,7 +130,7 @@ public class SwiftMediasPickerPlugin: NSObject, FlutterPlugin, GalleryController
                         }
                         print("Finished")
                     } else {
-                        DispatchQueue.main.async {
+                        self.runOnUIThread {
                             SVProgressHUD.showProgress(Float(progress), status: "Downloading from iCloud")
                         }
                         print("Downloading from cloud")
@@ -156,10 +158,12 @@ public class SwiftMediasPickerPlugin: NSObject, FlutterPlugin, GalleryController
                     }
                 })
             }
-
+            
             self.result!(resultUrls)
-            SVProgressHUD.dismiss()
-            controller.dismiss(animated: true, completion: nil)
+            self.runOnUIThread {
+                SVProgressHUD.dismiss()
+                controller.dismiss(animated: true, completion: nil)
+            }
         }
 
 
@@ -317,12 +321,21 @@ public class SwiftMediasPickerPlugin: NSObject, FlutterPlugin, GalleryController
             })
 
             semaphore.wait(timeout: .distantFuture)
-
+           
             self.result!(resultUrls)
-            SVProgressHUD.dismiss()
-            controller.dismiss(animated: true, completion: nil)
+            self.runOnUIThread {
+                SVProgressHUD.dismiss()
+                controller.dismiss(animated: true, completion: nil)
+            }
         }
 
+    }
+    
+    
+    public func runOnUIThread(closure: @escaping () -> ()) {
+        DispatchQueue.main.async(execute: {
+            closure()
+        })
     }
 
     public func galleryController(_ controller: GalleryController, requestLightbox images: [Image]) {
