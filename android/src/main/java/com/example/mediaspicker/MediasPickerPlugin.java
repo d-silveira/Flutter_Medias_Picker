@@ -31,20 +31,20 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.PluginRegistry;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
+import io.flutter.plugin.common.PluginRegistry.ActivityResultListener;
+import io.flutter.plugin.common.PluginRegistry.RequestPermissionsResultListener;
 
 /**
  * MediasPickerPlugin
  */
-public class MediasPickerPlugin implements MethodCallHandler, PluginRegistry.ActivityResultListener, PluginRegistry.RequestPermissionsResultListener {
+public class MediasPickerPlugin implements MethodCallHandler, ActivityResultListener, RequestPermissionsResultListener {
 	/**
 	 * Plugin registration.
 	 */
 
-
 	private Activity activity;
 	private Result   result;
 	private int      maxWidth, maxHeight, quality;
-	private boolean isPhoto;
 
 	private MediasPickerPlugin(Activity activity) {
 		this.activity = activity;
@@ -57,87 +57,92 @@ public class MediasPickerPlugin implements MethodCallHandler, PluginRegistry.Act
 
 		registrar.addActivityResultListener(plugin);
 		registrar.addRequestPermissionsResultListener(plugin);
-  }
-
+    }
 
 	@Override
 	public void onMethodCall(MethodCall call, Result result) {
-
-		if (call.method.equals("pickImages")) {
-
-			isPhoto = true;
-
-			int quantity = 0;
-			boolean withVideo = false;
-			if (call.hasArgument("quantity")) {
-				quantity = call.argument("quantity");
-			}
-			if (call.hasArgument("withVideo")) {
-				withVideo = call.argument("withVideo");
-			}
-			maxWidth = call.argument("maxWidth");
-			maxHeight = call.argument("maxHeight");
-			quality = call.argument("quality");
-
-			this.result = result;
-			FilePickerBuilder filePickerBuilder = FilePickerBuilder.getInstance();
-			if (quantity > 0) {
-				filePickerBuilder = filePickerBuilder.setMaxCount(quantity);
-			}
-			filePickerBuilder.enableVideoPicker(withVideo)
-							 .enableImagePicker(true)
-							 .pickPhoto(activity);
-
-		} else if (call.method.equals("pickVideos")) {
-
-			isPhoto = false;
-
-			int quantity = 0;
-			if (call.hasArgument("quantity")) {
-				quantity = call.argument("quantity");
-			}
-
-			this.result = result;
-			FilePickerBuilder filePickerBuilder = FilePickerBuilder.getInstance();
-			if (quantity > 0) {
-				filePickerBuilder = filePickerBuilder.setMaxCount(quantity);
-			}
-			filePickerBuilder.enableVideoPicker(true)
-							 .enableImagePicker(false)
-							 .pickPhoto(activity);
-
-		} else if (call.method.equals("deleteAllTempFiles")) {
-			this.result = result;
-			DeleteAllTempFiles();
-		} else if (call.method.equals("compressImages")) {
-			maxWidth = call.argument("maxWidth");
-			maxHeight = call.argument("maxHeight");
-			quality = call.argument("quality");
-			ArrayList<String> imgPaths = call.argument("imgPaths");
-			ArrayList<String> newImgPaths = new ArrayList<>();
-
-			for (String path : imgPaths) {
-				String newPath = CompressImage(path, maxWidth, maxHeight, quality);
-
-				if (newPath != null && newPath != "") {
-					newImgPaths.add(newPath);
-				}
-
-			}
-			this.result = result;
-			this.result.success(newImgPaths);
-
-		} else if (call.method.equals("checkPermission")) {
-			result.success(checkPermission());
-		} else if (call.method.equals("requestPermission")) {
-			this.result = result;
-			requestPermission();
-		} else {
-			result.notImplemented();
+		this.result = result;
+		switch (call.method) {
+			case "pickImages":
+				pickImages(call);
+				break;
+			case "pickVideos":
+				pickVideos(call);
+				break;
+			case "deleteAllTempFiles":
+				deleteAllTempFiles();
+				break;
+			case "compressImages":
+				compressImages(call);
+				break;
+			case "checkPermission":
+				result.success(checkPermission());
+				break;
+			case "requestPermission":
+				requestPermission();
+				break;
+			default:
+				result.notImplemented();
+				this.result = null;
+				break;
 		}
 	}
 
-	public static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
+	private void pickImages(MethodCall call) {
+		int quantity = 0;
+		boolean withVideo = false;
+		if (call.hasArgument("quantity")) {
+			quantity = call.argument("quantity");
+		}
+		if (call.hasArgument("withVideo")) {
+			withVideo = call.argument("withVideo");
+		}
+		maxWidth = call.argument("maxWidth");
+		maxHeight = call.argument("maxHeight");
+		quality = call.argument("quality");
+
+		FilePickerBuilder filePickerBuilder = FilePickerBuilder.getInstance();
+		if (quantity > 0) {
+			filePickerBuilder = filePickerBuilder.setMaxCount(quantity);
+		}
+		filePickerBuilder.enableVideoPicker(withVideo)
+				.enableImagePicker(true)
+				.pickPhoto(activity);
+	}
+
+	private void pickVideos(MethodCall call) {
+		int quantity = 0;
+		if (call.hasArgument("quantity")) {
+			quantity = call.argument("quantity");
+		}
+		FilePickerBuilder filePickerBuilder = FilePickerBuilder.getInstance();
+		if (quantity > 0) {
+			filePickerBuilder = filePickerBuilder.setMaxCount(quantity);
+		}
+		filePickerBuilder.enableVideoPicker(true)
+				.enableImagePicker(false)
+				.pickPhoto(activity);
+	}
+
+	private void compressImages(MethodCall call) {
+		maxWidth = call.argument("maxWidth");
+		maxHeight = call.argument("maxHeight");
+		quality = call.argument("quality");
+		List<String> imgPaths = call.argument("imgPaths");
+		List<String> newImgPaths = new ArrayList<>();
+
+		for (String path : imgPaths) {
+			String newPath = CompressImage(path, maxWidth, maxHeight, quality);
+
+			if (newPath != null && newPath != "") {
+				newImgPaths.add(newPath);
+			}
+
+		}
+		result.success(newImgPaths);
+	}
+
+	private static int calculateInSampleSize(BitmapFactory.Options options, int reqWidth, int reqHeight) {
 		final int height = options.outHeight;
 		final int width = options.outWidth;
 		int inSampleSize = 1;
@@ -157,12 +162,10 @@ public class MediasPickerPlugin implements MethodCallHandler, PluginRegistry.Act
 
 
 	@SuppressWarnings("deprecation")
-	public String CompressImage(String filename, int maxWidth, int maxHeight, int quality) {
-
+    private String CompressImage(String filename, int maxWidth, int maxHeight, int quality) {
 		Bitmap scaledBitmap = null;
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
-		Bitmap bmp = BitmapFactory.decodeFile(filename, options);
 
 		int actualHeight = options.outHeight;
 		int actualWidth = options.outWidth;
@@ -189,6 +192,7 @@ public class MediasPickerPlugin implements MethodCallHandler, PluginRegistry.Act
 		options.inInputShareable = true;
 		options.inTempStorage = new byte[16 * 1024];
 
+		Bitmap bmp = null;
 		try {
 			bmp = BitmapFactory.decodeFile(filename, options);
 		} catch (OutOfMemoryError exception) {
@@ -211,11 +215,9 @@ public class MediasPickerPlugin implements MethodCallHandler, PluginRegistry.Act
 		canvas.setMatrix(scaleMatrix);
 		canvas.drawBitmap(bmp, middleX - bmp.getWidth() / 2, middleY - bmp.getHeight() / 2, new Paint(Paint.FILTER_BITMAP_FLAG));
 
-		if (bmp != null) {
-			bmp.recycle();
-		}
+        bmp.recycle();
 
-		ExifInterface exif;
+        ExifInterface exif;
 
 		try {
 			exif = new ExifInterface(filename);
@@ -243,16 +245,16 @@ public class MediasPickerPlugin implements MethodCallHandler, PluginRegistry.Act
 
 		File tempDir = new File(tempDirPath);
 
-		File f = new File(path);
+		File file = new File(path);
 		try {
 			if (!tempDir.exists()) {
 				tempDir.mkdirs();
 			}
 
-			f.createNewFile();
+			file.createNewFile();
 
 			//write the bytes in file
-			FileOutputStream fo = new FileOutputStream(f);
+			FileOutputStream fo = new FileOutputStream(file);
 			fo.write(outStream.toByteArray());
 			// remember close de FileOutput
 			fo.close();
@@ -265,25 +267,22 @@ public class MediasPickerPlugin implements MethodCallHandler, PluginRegistry.Act
 		return filename;
 	}
 
-
-	public void DeleteAllTempFiles() {
+	private void deleteAllTempFiles() {
 		String tempDirPath = Environment.getExternalStorageDirectory() + File.separator + "TempImgs" + File.separator;
-
 		File tempDir = new File(tempDirPath);
 		if (tempDir.exists()) {
-
 			String[] children = tempDir.list();
 			for (int i = 0; i < children.length; i++) {
 				new File(tempDir, children[i]).delete();
 			}
 
 			if (tempDir.delete()) {
-				this.result.success(true);
+				result.success(true);
 			} else {
-				this.result.success(false);
+				result.success(false);
 			}
 		} else {
-			this.result.success(true);
+			result.success(true);
 		}
 	}
 
@@ -317,34 +316,14 @@ public class MediasPickerPlugin implements MethodCallHandler, PluginRegistry.Act
 
 	@Override
 	public boolean onActivityResult(int requestCode, int resultCode, Intent intent) {
-
 		if (requestCode == FilePickerConst.REQUEST_CODE_PHOTO) {
-
 			List<String> docPaths = new ArrayList<>();
-
 			if (intent != null) {
-				List<String> paths = intent.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA);
-
-//				if (isPhoto) {
-//					for (String item : paths) {
-//
-//						String path = CompressImage(item, maxWidth, maxHeight, quality);
-//
-//						if (path != null) {
-//							docPaths.add(path);
-//						}
-//					}
-//				} else {
-					docPaths = paths;
-//				}
-
+				docPaths = intent.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA);
 			}
-
-			this.result.success(docPaths);
-
+			result.success(docPaths);
 			return true;
 		}
-
 		return false;
 	}
 }
