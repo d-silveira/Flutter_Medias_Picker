@@ -1,3 +1,8 @@
+## [1.3.0] - 2019.10.04
+
+* merge pull request from Miguel Ruivo @miguelpruivo to fix iOS 13 not working
+* merge pull request from Askar Syzdykov @askarsyzdykov to cleanup some code
+
 ## [1.2.3] - 2019.10.01
 
 * updates example README
