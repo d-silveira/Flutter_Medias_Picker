@@ -5,11 +5,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 
 class MediaPicker {
-  static const MethodChannel _channel =
-      const MethodChannel('media_picker');
+  static const MethodChannel _channel = const MethodChannel('media_picker');
 
   static Future<List<String>> pickImages({int quantity, int maxWidth, int maxHeight, int quality, bool withVideo}) async {
-
     if (maxWidth != null && maxWidth < 0) {
       throw new ArgumentError.value(maxWidth, 'maxWidth cannot be negative');
     }
@@ -22,10 +20,9 @@ class MediaPicker {
       throw new ArgumentError.value(maxWidth, 'quality cannot be negative and cannot be bigger then 100');
     }
 
-    if (Platform.isAndroid)
-      if (!await checkPermission())
-        if (!await requestPermission())
-          return [];
+    if (Platform.isAndroid && !await checkPermission() && !await requestPermission()) {
+      return [];
+    }
 
     var arguments = <String, dynamic>{
       'maxWidth': maxWidth ?? 0,
@@ -38,24 +35,21 @@ class MediaPicker {
     if (withVideo != null) {
       arguments['withVideo'] = withVideo;
     }
-    final List<String> docsPaths = await _channel.invokeListMethod<String>('pickImages', arguments);
-    return docsPaths;
+
+    return await _channel.invokeListMethod<String>('pickImages', arguments);
   }
 
   static Future<List<String>> pickVideos({int quantity}) async {
+    if (Platform.isAndroid && !await checkPermission() && !await requestPermission()) {
+      return [];
+    }
 
-    if (Platform.isAndroid)
-      if (!await checkPermission())
-        if (!await requestPermission())
-          return [];
-
-    var arguments = <String, dynamic>{ };
+    var arguments = <String, dynamic>{};
     if (quantity != null) {
       arguments['quantity'] = quantity;
     }
 
-    final List<String> docsPaths = await _channel.invokeListMethod<String>('pickVideos', arguments);
-    return docsPaths;
+    return await _channel.invokeListMethod<String>('pickVideos', arguments);
   }
 
   static Future<List<String>> compressImages({@required List<String> imgPaths, int maxWidth, int maxHeight, int quality}) async {
@@ -76,28 +70,26 @@ class MediaPicker {
       throw new ArgumentError.value(quality, 'quality cannot be negative and cannot be bigger then 100');
     }
 
-    if (Platform.isAndroid)
-      if (!await checkPermission())
-        if (!await requestPermission())
-          return [];
+    if (Platform.isAndroid && !await checkPermission() && !await requestPermission()) {
+      return [];
+    }
 
-    final List<String> docsPaths = await _channel.invokeListMethod<String>('compressImages', <String, dynamic>{
+    return await _channel.invokeListMethod<String>('compressImages', <String, dynamic>{
       'imgPaths': imgPaths,
       'maxWidth': maxWidth ?? 0,
       'maxHeight': maxHeight ?? 0,
       'quality': quality ?? 100
     });
-    return docsPaths;
   }
 
   //Just android (storage permission)
   static Future<bool> checkPermission() async {
-    return await _channel.invokeMethod("checkPermission");
+    return await _channel.invokeMethod('checkPermission');
   }
 
   //Just android (storage permission)
   static Future<bool> requestPermission() async {
-    return await _channel.invokeMethod("requestPermission");
+    return await _channel.invokeMethod('requestPermission');
   }
 
   static Future<bool> deleteAllTempFiles() async {
