@@ -166,7 +166,7 @@ public class MediasPickerPlugin implements MethodCallHandler, ActivityResultList
 		Bitmap scaledBitmap = null;
 		BitmapFactory.Options options = new BitmapFactory.Options();
 		options.inJustDecodeBounds = true;
-
+		BitmapFactory.decodeFile(new File(filename).getAbsolutePath(), options);
 		int actualHeight = options.outHeight;
 		int actualWidth = options.outWidth;
 
