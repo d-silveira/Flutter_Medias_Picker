@@ -1,4 +1,4 @@
-## [1.3.0] - 2020.01.24
+## [1.3.1] - 2020.01.24
 
 * merge pull request from Miguel Ruivo @miguelpruivo to fix Android image compression
 
