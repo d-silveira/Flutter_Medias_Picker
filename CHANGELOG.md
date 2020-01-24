@@ -1,3 +1,7 @@
+## [1.3.0] - 2020.01.24
+
+* merge pull request from Miguel Ruivo @miguelpruivo to fix Android image compression
+
 ## [1.3.0] - 2019.10.04
 
 * merge pull request from Miguel Ruivo @miguelpruivo to fix iOS 13 not working
