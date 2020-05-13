@@ -12,9 +12,6 @@ import android.graphics.Paint;
 import android.media.ExifInterface;
 import android.os.Environment;
 
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -23,15 +20,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import droidninja.filepicker.FilePickerBuilder;
 import droidninja.filepicker.FilePickerConst;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
-import io.flutter.plugin.common.PluginRegistry;
-import io.flutter.plugin.common.PluginRegistry.Registrar;
 import io.flutter.plugin.common.PluginRegistry.ActivityResultListener;
+import io.flutter.plugin.common.PluginRegistry.Registrar;
 import io.flutter.plugin.common.PluginRegistry.RequestPermissionsResultListener;
 
 /**
@@ -321,7 +319,9 @@ public class MediasPickerPlugin implements MethodCallHandler, ActivityResultList
 			if (intent != null) {
 				docPaths = intent.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA);
 			}
-			result.success(docPaths);
+			if (result != null) {
+				result.success(docPaths);
+			}
 			return true;
 		}
 		return false;
