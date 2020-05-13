@@ -2,8 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/android.iml" filepath="$PROJECT_DIR$/android.iml" />
-      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/android.iml" filepath="$PROJECT_DIR$/android.iml" group="android" />
+      <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" group="android/app" />
+      <module fileurl="file://$PROJECT_DIR$/../../android/media_picker.iml" filepath="$PROJECT_DIR$/../../android/media_picker.iml" group="android/media_picker" />
       <module fileurl="file://$PROJECT_DIR$/../../android/medias_picker.iml" filepath="$PROJECT_DIR$/../../android/medias_picker.iml" />
     </modules>
   </component>
