@@ -41,7 +41,7 @@ You need to put these styles to plugin works
   </style>
 ```
 
-add <uses-permission android:name="android.permission.CAMERA"/> in manifest
+add ```<uses-permission android:name="android.permission.CAMERA"/>``` in manifest
 
 and in your podfile
 

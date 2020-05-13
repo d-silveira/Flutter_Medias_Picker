@@ -1,3 +1,9 @@
+## [1.3.2] - 2020.05.13
+
+* added preventive Flutter result null check
+* update android dependencies
+* update gradle
+
 ## [1.3.1] - 2020.01.24
 
 * merge pull request from Miguel Ruivo @miguelpruivo to fix Android image compression
@@ -20,4 +26,4 @@
 * gallery with Camera support
 * gallery with video support
 * androidX update
-* Officializing fork from upstream Flutter Medias Picker
+* Oficializing fork from upstream Flutter Medias Picker
