@@ -18,6 +18,34 @@ allprojects {
     tasks.withType(JavaCompile) {
         options.compilerArgs << "-Xlint:unchecked" << "-Xlint:deprecation"
     }
+    configurations.all {
+        resolutionStrategy.force "androidx.core:core:1.0.1" //1.0.0-rc01
+        resolutionStrategy.force "androidx.fragment:fragment:1.0.0"
+        resolutionStrategy.force "androidx.loader:loader:1.0.0"
+        resolutionStrategy.force "androidx.viewpager:viewpager:1.0.0"
+        resolutionStrategy.force "androidx.coordinatorlayout:coordinatorlayout:1.0.0"
+        resolutionStrategy.force "androidx.slidingpanelayout:slidingpanelayout:1.0.0"
+        resolutionStrategy.force "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"
+        resolutionStrategy.force "androidx.asynclayoutinflater:asynclayoutinflater:1.0.0"
+        resolutionStrategy.force "androidx.drawerlayout:drawerlayout:1.0.0"
+        resolutionStrategy.force "androidx.customview:customview:1.0.0"
+        resolutionStrategy.force "androidx.lifecycle:lifecycle-common:2.0.0"
+        resolutionStrategy.force "androidx.lifecycle:lifecycle-runtime:2.0.0"
+        resolutionStrategy.force "androidx.lifecycle:lifecycle-viewmodel:2.0.0"
+        resolutionStrategy.force "androidx.lifecycle:lifecycle-livedata-core:2.0.0"
+        resolutionStrategy.force "androidx.arch.core:core-common:2.0.0"
+        resolutionStrategy.force "androidx.arch.core:core-runtime:2.0.0"
+        resolutionStrategy.force "androidx.versionedparcelable:versionedparcelable:1.0.0"
+        resolutionStrategy.force "androidx.collection:collection:1.0.0"
+        resolutionStrategy.force "androidx.interpolator:interpolator:1.0.0"
+        resolutionStrategy.force "androidx.cursoradapter:cursoradapter:1.0.0"
+        resolutionStrategy.force "androidx.annotation:annotation:1.0.0"
+        resolutionStrategy.force "androidx.legacy:legacy-support-core-ui:1.0.0"
+        resolutionStrategy.force "androidx.legacy:legacy-support-core-utils:1.0.0"
+        resolutionStrategy.force "androidx.documentfile:documentfile:1.0.0"
+        resolutionStrategy.force "androidx.localbroadcastmanager:localbroadcastmanager:1.0.0"
+        resolutionStrategy.force "androidx.print:print:1.0.0"
+    }
 }
 
 rootProject.buildDir = '../build'
