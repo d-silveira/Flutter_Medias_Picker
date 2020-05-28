@@ -15,7 +15,13 @@ Forked from [Flutter Medias Picker](https://github.com/lubritto/Flutter_Medias_P
 
 For help on editing plugin code, view the [documentation](https://flutter.io/platform-plugins/#edit-code).
 
-You need to put these styles to plugin works
+In order to load the images requested in Flutter's Image, you need to use the [flutter_absolute_path plugin](https://pub.dev/packages/flutter_absolute_path)
+
+check the included example if you need to see how to use it. (You'll need to raise your minSdkVersion to 19)
+
+You need to add these styles to Android to use the plugin
+
+or else keep using version 1.3.2
 
 ```sh
   <style name="LibAppTheme" parent="Theme.AppCompat.Light.NoActionBar">

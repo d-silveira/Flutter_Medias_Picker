@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_absolute_path/flutter_absolute_path.dart';
 import 'package:media_picker/media_picker.dart';
 
 void main() => runApp(new MyApp());
@@ -32,8 +33,13 @@ class _MyAppState extends State<MyApp> {
 
     if (!mounted) return;
 
+    convertPath(_mediaPaths.first.toString());
+  }
+
+  convertPath(String uri) async {
+    final filePath = await FlutterAbsolutePath.getAbsolutePath(uri);
     setState(() {
-      _media = _mediaPaths.first.toString();
+      _media = filePath;
     });
   }
 
@@ -59,7 +65,7 @@ class _MyAppState extends State<MyApp> {
         body: new Center(
           child: new Column(
             children: [
-//              Image.file(File.fromUri(Uri.parse(_media))),
+              Image.file(File.fromUri(Uri.parse(_media))),
               new Text('media: $_media\n'),
               new MaterialButton(
                 child: new Text(

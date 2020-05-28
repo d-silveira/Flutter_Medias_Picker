@@ -1,3 +1,7 @@
+## [1.3.3] - 2020.05.28
+
+* updated Android picker dependency
+
 ## [1.3.2] - 2020.05.13
 
 * added preventive Flutter result null check
