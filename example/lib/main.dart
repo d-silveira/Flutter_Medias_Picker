@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:media_picker/media_picker.dart';
@@ -10,7 +12,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  String _platformVersion = 'Unknown';
+  String _media = '';
   List<dynamic> _mediaPaths;
 
   @override
@@ -18,9 +20,9 @@ class _MyAppState extends State<MyApp> {
     super.initState();
   }
 
-  pickImages() async {
+  pickImages({quantity = 1}) async {
     try {
-      _mediaPaths = await MediaPicker.pickImages(withVideo: true);
+      _mediaPaths = await MediaPicker.pickImages(withVideo: true, quantity: quantity);
 
 //      filter only images from mediaPaths and send them to the compressor
 //      List<dynamic> listCompressed = await MediasPicker.compressImages(imgPaths: [firstPath], maxWidth: 600, maxHeight: 600, quality: 100);
@@ -31,7 +33,7 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     setState(() {
-      _platformVersion = _mediaPaths.toString();
+      _media = _mediaPaths.first.toString();
     });
   }
 
@@ -43,7 +45,7 @@ class _MyAppState extends State<MyApp> {
     if (!mounted) return;
 
     setState(() {
-      _platformVersion = _mediaPaths.toString();
+      _media = _mediaPaths.toString();
     });
   }
 
@@ -57,7 +59,8 @@ class _MyAppState extends State<MyApp> {
         body: new Center(
           child: new Column(
             children: [
-              new Text('Running on: $_platformVersion\n'),
+//              Image.file(File.fromUri(Uri.parse(_media))),
+              new Text('media: $_media\n'),
               new MaterialButton(
                 child: new Text(
                   "Pick images and videos",
@@ -77,11 +80,11 @@ class _MyAppState extends State<MyApp> {
                 onPressed: () async {
                   if (await MediaPicker.deleteAllTempFiles()) {
                     setState(() {
-                      _platformVersion = "deleted";
+                      _media = "deleted";
                     });
                   } else {
                     setState(() {
-                      _platformVersion = "not deleted";
+                      _media = "not deleted";
                     });
                   }
                 },

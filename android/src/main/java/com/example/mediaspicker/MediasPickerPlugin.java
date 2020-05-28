@@ -10,7 +10,9 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -103,9 +105,13 @@ public class MediasPickerPlugin implements MethodCallHandler, ActivityResultList
 		if (quantity > 0) {
 			filePickerBuilder = filePickerBuilder.setMaxCount(quantity);
 		}
-		filePickerBuilder.enableVideoPicker(withVideo)
-				.enableImagePicker(true)
-				.pickPhoto(activity);
+		try {
+			filePickerBuilder.enableVideoPicker(withVideo)
+					.enableImagePicker(true)
+					.pickPhoto(activity);
+		} catch (Exception e) {
+			Log.w("MediaPickerPlugin", "caught droidnija file-picker expception", e);
+		}
 	}
 
 	private void pickVideos(MethodCall call) {
@@ -315,14 +321,16 @@ public class MediasPickerPlugin implements MethodCallHandler, ActivityResultList
 	@Override
 	public boolean onActivityResult(int requestCode, int resultCode, Intent intent) {
 		if (requestCode == FilePickerConst.REQUEST_CODE_PHOTO) {
-			List<String> docPaths = new ArrayList<>();
-			if (intent != null) {
-				docPaths = intent.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA);
-			}
-			if (result != null) {
+			if (resultCode == Activity.RESULT_OK && intent != null) {
+				List<String> docPaths = new ArrayList<>();
+				List<Uri> photoUris = intent.getParcelableArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA);
+				for (Uri uri: photoUris) {
+					docPaths.add(uri.toString());
+				}
+
 				result.success(docPaths);
+				return true;
 			}
-			return true;
 		}
 		return false;
 	}
