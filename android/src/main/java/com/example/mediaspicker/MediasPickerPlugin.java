@@ -11,6 +11,7 @@ import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.media.ExifInterface;
 import android.os.Environment;
+import android.util.Log;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -89,11 +90,15 @@ public class MediasPickerPlugin implements MethodCallHandler, ActivityResultList
 	private void pickImages(MethodCall call) {
 		int quantity = 0;
 		boolean withVideo = false;
+		boolean withCamera = true;
 		if (call.hasArgument("quantity")) {
 			quantity = call.argument("quantity");
 		}
 		if (call.hasArgument("withVideo")) {
 			withVideo = call.argument("withVideo");
+		}
+		if (call.hasArgument("withCamera")) {
+			withCamera = call.argument("withCamera");
 		}
 		maxWidth = call.argument("maxWidth");
 		maxHeight = call.argument("maxHeight");
@@ -103,9 +108,14 @@ public class MediasPickerPlugin implements MethodCallHandler, ActivityResultList
 		if (quantity > 0) {
 			filePickerBuilder = filePickerBuilder.setMaxCount(quantity);
 		}
-		filePickerBuilder.enableVideoPicker(withVideo)
-				.enableImagePicker(true)
-				.pickPhoto(activity);
+		try {
+			filePickerBuilder.enableVideoPicker(withVideo)
+					.enableImagePicker(true)
+					.enableCameraSupport(withCamera)
+					.pickPhoto(activity);
+		} catch (Exception e) {
+			Log.w("MediaPickerPlugin", "caught droidnija file-picker expception", e);
+		}
 	}
 
 	private void pickVideos(MethodCall call) {
@@ -319,9 +329,7 @@ public class MediasPickerPlugin implements MethodCallHandler, ActivityResultList
 			if (intent != null) {
 				docPaths = intent.getStringArrayListExtra(FilePickerConst.KEY_SELECTED_MEDIA);
 			}
-			if (result != null) {
-				result.success(docPaths);
-			}
+			result.success(docPaths);
 			return true;
 		}
 		return false;

@@ -40,6 +40,7 @@ public class SwiftMediasPickerPlugin: NSObject, FlutterPlugin, GalleryController
             }
             let quantity = args["quantity"]
             let withVideo = args["withVideo"]
+            let withCamera = args["withCamera"]
             maxWidth = args["maxWidth"]
             maxHeight = args["maxHeight"]
             quality = args["quality"]
@@ -47,10 +48,14 @@ public class SwiftMediasPickerPlugin: NSObject, FlutterPlugin, GalleryController
             if (quantity != nil) {
                 Config.Camera.imageLimit = quantity!
             }
-            if (withVideo != nil && withVideo != nil) {
+            if (withVideo != nil && withVideo && withCamera != nil && withCamera) {
                 Config.tabsToShow = [.imageTab, .cameraTab, .videoTab]
-            } else {
+            } else if (withVideo != nil && withVideo) {
+                Config.tabsToShow = [.imageTab, .videoTab]
+            } else if (withCamera != nil && withCamera) {
                 Config.tabsToShow = [.imageTab, .cameraTab]
+            } else {
+                Config.tabsToShow = [.imageTab]
             }
 
             let gallery = GalleryController()
@@ -110,7 +115,7 @@ public class SwiftMediasPickerPlugin: NSObject, FlutterPlugin, GalleryController
         DispatchQueue.global(qos: .userInitiated).async {
             let resultUrls : NSMutableArray = NSMutableArray()
             let fileManager:FileManager = FileManager()
-            
+
             self.runOnUIThread {
               SVProgressHUD.show()
             }
@@ -158,7 +163,7 @@ public class SwiftMediasPickerPlugin: NSObject, FlutterPlugin, GalleryController
                     }
                 })
             }
-            
+
             self.result!(resultUrls)
             self.runOnUIThread {
                 SVProgressHUD.dismiss()
@@ -321,7 +326,7 @@ public class SwiftMediasPickerPlugin: NSObject, FlutterPlugin, GalleryController
             })
 
             semaphore.wait(timeout: .distantFuture)
-           
+
             self.result!(resultUrls)
             self.runOnUIThread {
                 SVProgressHUD.dismiss()
@@ -330,8 +335,8 @@ public class SwiftMediasPickerPlugin: NSObject, FlutterPlugin, GalleryController
         }
 
     }
-    
-    
+
+
     public func runOnUIThread(closure: @escaping () -> ()) {
         DispatchQueue.main.async(execute: {
             closure()
