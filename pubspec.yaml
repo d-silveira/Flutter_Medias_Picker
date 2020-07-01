@@ -1,6 +1,6 @@
 name: media_picker
 description: Flutter plugin to get pictures and videos from the device. It allows you to select one or more images from gallery or camera, without needing to switch provider.
-version: 1.3.3
+version: 1.3.4
 homepage: https://github.com/d-silveira/flutter_media_picker
 
 dependencies:

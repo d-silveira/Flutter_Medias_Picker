@@ -1,3 +1,7 @@
+## [1.3.4] - 2020.07.01
+
+* added support for not showing camera option
+
 ## [1.3.3] - 2020.05.28
 
 * updated Android picker dependency
