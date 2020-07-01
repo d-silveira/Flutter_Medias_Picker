@@ -91,11 +91,15 @@ public class MediasPickerPlugin implements MethodCallHandler, ActivityResultList
 	private void pickImages(MethodCall call) {
 		int quantity = 0;
 		boolean withVideo = false;
+		boolean withCamera = true;
 		if (call.hasArgument("quantity")) {
 			quantity = call.argument("quantity");
 		}
 		if (call.hasArgument("withVideo")) {
 			withVideo = call.argument("withVideo");
+		}
+		if (call.hasArgument("withCamera")) {
+			withCamera = call.argument("withCamera");
 		}
 		maxWidth = call.argument("maxWidth");
 		maxHeight = call.argument("maxHeight");
@@ -108,6 +112,7 @@ public class MediasPickerPlugin implements MethodCallHandler, ActivityResultList
 		try {
 			filePickerBuilder.enableVideoPicker(withVideo)
 					.enableImagePicker(true)
+					.enableCameraSupport(withCamera)
 					.pickPhoto(activity);
 		} catch (Exception e) {
 			Log.w("MediaPickerPlugin", "caught droidnija file-picker expception", e);

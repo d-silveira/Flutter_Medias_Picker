@@ -7,7 +7,7 @@ import 'package:flutter/services.dart';
 class MediaPicker {
   static const MethodChannel _channel = const MethodChannel('media_picker');
 
-  static Future<List<String>> pickImages({int quantity, int maxWidth, int maxHeight, int quality, bool withVideo}) async {
+  static Future<List<String>> pickImages({int quantity, int maxWidth, int maxHeight, int quality, bool withVideo, bool withCamera}) async {
     if (maxWidth != null && maxWidth < 0) {
       throw new ArgumentError.value(maxWidth, 'maxWidth cannot be negative');
     }
@@ -34,6 +34,9 @@ class MediaPicker {
     }
     if (withVideo != null) {
       arguments['withVideo'] = withVideo;
+    }
+    if (withCamera != null) {
+      arguments['withCamera'] = withCamera;
     }
 
     return await _channel.invokeListMethod<String>('pickImages', arguments);
