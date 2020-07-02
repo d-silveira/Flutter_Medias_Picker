@@ -48,11 +48,11 @@ public class SwiftMediasPickerPlugin: NSObject, FlutterPlugin, GalleryController
             if (quantity != nil) {
                 Config.Camera.imageLimit = quantity!
             }
-            if (withVideo != nil && withVideo && withCamera != nil && withCamera) {
+            if (withVideo != nil && withCamera != nil) {
                 Config.tabsToShow = [.imageTab, .cameraTab, .videoTab]
-            } else if (withVideo != nil && withVideo) {
+            } else if (withVideo != nil) {
                 Config.tabsToShow = [.imageTab, .videoTab]
-            } else if (withCamera != nil && withCamera) {
+            } else if (withCamera != nil) {
                 Config.tabsToShow = [.imageTab, .cameraTab]
             } else {
                 Config.tabsToShow = [.imageTab]
