@@ -348,6 +348,7 @@ public class SwiftMediasPickerPlugin: NSObject, FlutterPlugin, GalleryController
     }
 
     public func galleryControllerDidCancel(_ controller: GalleryController) {
+        self.result(NSMutableArray())
         controller.dismiss(animated: true, completion: nil)
     }
 }

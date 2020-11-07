@@ -335,6 +335,8 @@ public class MediasPickerPlugin implements MethodCallHandler, ActivityResultList
 
 				result.success(docPaths);
 				return true;
+			} else if(resultCode == Activity.RESULT_CANCELED) {
+				result.success(new ArrayList<String>());
 			}
 		}
 		return false;
