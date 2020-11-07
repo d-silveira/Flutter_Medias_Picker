@@ -48,11 +48,11 @@ public class SwiftMediasPickerPlugin: NSObject, FlutterPlugin, GalleryController
             if (quantity != nil) {
                 Config.Camera.imageLimit = quantity!
             }
-            if (withVideo != nil && withVideo && withCamera != nil && withCamera) {
+            if (withVideo != nil && withVideo! > 0 && withCamera != nil && withCamera! > 0) {
                 Config.tabsToShow = [.imageTab, .cameraTab, .videoTab]
-            } else if (withVideo != nil && withVideo) {
+            } else if (withVideo != nil && withVideo! > 0) {
                 Config.tabsToShow = [.imageTab, .videoTab]
-            } else if (withCamera != nil && withCamera) {
+            } else if (withCamera != nil && withCamera! > 0) {
                 Config.tabsToShow = [.imageTab, .cameraTab]
             } else {
                 Config.tabsToShow = [.imageTab]
@@ -348,7 +348,7 @@ public class SwiftMediasPickerPlugin: NSObject, FlutterPlugin, GalleryController
     }
 
     public func galleryControllerDidCancel(_ controller: GalleryController) {
-        self.result(NSMutableArray())
+        self.result!(NSMutableArray())
         controller.dismiss(animated: true, completion: nil)
     }
 }
